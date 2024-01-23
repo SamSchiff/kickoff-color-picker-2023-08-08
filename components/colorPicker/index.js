@@ -1,62 +1,60 @@
-import { useState } from 'react';
-import ColorPicker from "./colorPicker";
+import { useState, useEffect } from 'react';
 import s from "./styles.module.css";
+import axios from 'axios';
+import PalettePicker from './palettePicker';
 
 const initialColorArray = [0,0,0,0,0]
 
 const ColorPickerHome = () => {
-  const [red, setRed] = useState(initialColorArray);
-  const [green, setGreen] = useState(initialColorArray);
-  const [blue, setBlue] = useState(initialColorArray);
+  const [palettes, setPalettes] = useState([]);
 
-  const conditionallySetNumber = (str, setColor, index) => {
-    if (str === "") {
-      setColor((prevColors) => {
-        const newColors = [...prevColors]
-        newColors[index] = str
-        return newColors
-      })
+  const fetchPalettes = async () => {
+    const { status, data } = await axios.get("/api/palette");
+
+    if (status === 200) {
+      setPalettes(data);
+    } else {
+      throw new Error("Error connecting to server");
     }
-    const num = parseInt(str);
-    if (!isNaN(num) && num >= 0 && num <= 255) {
-      setColor((prevColors) => {
-        const newColors = [...prevColors]
-        newColors[index] = num
-        return newColors
-      })
-    }
+  };
+
+  useEffect(() => {
+    fetchPalettes();
+  }, [setPalettes, axios]);
+
+  const savePaletteCallback = () => {
+    fetchPalettes()
+    alert("Successful!")
   }
 
-  const generateSetRed = (index) => {
-    return (newColor) => {
-      conditionallySetNumber(newColor, setRed, index);
-    }
-  }
-  const generateSetGreen = (index) => {
-    return (newColor) => {
-      conditionallySetNumber(newColor, setGreen, index);
-    }
-  }
-  const generateSetBlue = (index) => {
-    return (newColor) => {
-      conditionallySetNumber(newColor, setBlue, index);
-    }
+  const parseColorString = (colorString) => {
+    return colorString.split(",")
   }
 
   return (
     <div className={s.colorPickerHomeContainer}>
       <h1 className={s.header}>Welcome to Color Picker</h1>
-      <div className={s.colorPickerFormContainer}>
-      {initialColorArray.map((val, index) => {
-        return <ColorPicker 
-        red={red[index]} 
-        green={green[index]} 
-        blue={blue[index]} 
-        setRed={generateSetRed(index)} 
-        setGreen={generateSetGreen(index)} 
-        setBlue={generateSetBlue()}/>
-      })}
-      </div>
+      <PalettePicker initialRed={initialColorArray} initialGreen={initialColorArray} initialBlue={initialColorArray} savePaletteCallback={savePaletteCallback}/>
+      <h2 className={s.savedPalettesHeader}>Saved Palettes</h2>
+      {
+        palettes.map((palette) => {
+          const initialRed = [];
+          const initialGreen = [];
+          const initialBlue = [];
+          initialColorArray.forEach((val, index) => {
+            const key = `color${index}`; 
+            const colors = parseColorString(palette[key])
+            initialRed.push(colors[0])
+            initialGreen.push(colors[1])
+            initialBlue.push(colors[2])
+          })
+          return (
+            <div className={s.savedPaletteContainer} key={palette.id}>
+              <PalettePicker initialRed={initialRed} initialGreen={initialGreen} initialBlue={initialBlue} savePaletteCallback={savePaletteCallback} paletteId={palette.id}/> 
+            </div>
+          )
+        })
+      }
     </div>
   )
 }
