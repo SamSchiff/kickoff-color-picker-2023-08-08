@@ -1,0 +1,94 @@
+.colorPickerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+}
+  
+.header {
+  text-align: center;
+  margin-top: 150px;
+  font-size: 2.5rem;
+}
+
+.rgbContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.chosenColorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 100px;
+  background-color: gray;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+.chosenColor {
+  border-radius: 50px;
+  width: 200px;
+  height: 60px;
+}
+
+.colorContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.colorLabelRed {
+  align-self: center;
+  color: red;
+}
+.colorLabelGreen {
+  align-self: center;
+  color: green;
+}
+.colorLabelBlue {
+  align-self: center;
+  color: blue;
+}
+  
+.colorInputRed {
+  text-align: center;
+  padding: 10px 12px;
+  border-radius: 3px;
+  border: solid 1px grey;
+  box-shadow: none;
+  outline: none;
+}
+  
+.colorInputRed:focus {
+  border-color: red;
+}
+
+.colorInputGreen {
+  text-align: center;
+  padding: 10px 12px;
+  border-radius: 3px;
+  border: solid 1px grey;
+  box-shadow: none;
+  outline: none;
+}
+  
+.colorInputGreen:focus {
+  border-color: green;
+}
+  
+.colorInputBlue {
+  text-align: center;
+  padding: 10px 12px;
+  border-radius: 3px;
+  border: solid 1px grey;
+  box-shadow: none;
+  outline: none;
+}
+  
+.colorInputBlue:focus {
+  border-color: blue;
+}
