@@ -1,3 +1,16 @@
+.colorPickerHomeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+}
+.colorPickerFormContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 20px;
+  flex-wrap: wrap;
+}
 .colorPickerContainer {
   display: flex;
   flex-direction: column;
@@ -24,7 +37,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 300px;
+  width: 150px;
   height: 100px;
   background-color: gray;
   margin-bottom: 20px;
@@ -32,7 +45,7 @@
 }
 .chosenColor {
   border-radius: 50px;
-  width: 200px;
+  width: 100px;
   height: 60px;
 }
 
@@ -56,11 +69,12 @@
   
 .colorInputRed {
   text-align: center;
-  padding: 10px 12px;
+  padding: 10px 0px;
   border-radius: 3px;
   border: solid 1px grey;
   box-shadow: none;
   outline: none;
+  width: 50px;
 }
   
 .colorInputRed:focus {
@@ -69,11 +83,12 @@
 
 .colorInputGreen {
   text-align: center;
-  padding: 10px 12px;
+  padding: 10px 0px;
   border-radius: 3px;
   border: solid 1px grey;
   box-shadow: none;
   outline: none;
+  width: 50px;
 }
   
 .colorInputGreen:focus {
@@ -82,11 +97,12 @@
   
 .colorInputBlue {
   text-align: center;
-  padding: 10px 12px;
+  padding: 10px 0px;
   border-radius: 3px;
   border: solid 1px grey;
   box-shadow: none;
   outline: none;
+  width: 50px;
 }
   
 .colorInputBlue:focus {

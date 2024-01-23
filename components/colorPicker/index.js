@@ -1,68 +1,64 @@
-import { useState } from "react";
-import ChosenColorContainer from "./chosenColorContainer";
-
+import { useState } from 'react';
+import ColorPicker from "./colorPicker";
 import s from "./styles.module.css";
 
-const placeholder = "0-255";
+const initialColorArray = [0,0,0,0,0]
 
-const ColorPicker = () => {
-  const [red, setRed] = useState(0);
-  const [green, setGreen] = useState(0);
-  const [blue, setBlue] = useState(0);
+const ColorPickerHome = () => {
+  const [red, setRed] = useState(initialColorArray);
+  const [green, setGreen] = useState(initialColorArray);
+  const [blue, setBlue] = useState(initialColorArray);
 
-  const conditionallySetNumber = (str, setColor) => {
-    if (str === "") return setColor(str)
+  const conditionallySetNumber = (str, setColor, index) => {
+    if (str === "") {
+      setColor((prevColors) => {
+        const newColors = [...prevColors]
+        newColors[index] = str
+        return newColors
+      })
+    }
     const num = parseInt(str);
     if (!isNaN(num) && num >= 0 && num <= 255) {
-      setColor(num)
+      setColor((prevColors) => {
+        const newColors = [...prevColors]
+        newColors[index] = num
+        return newColors
+      })
     }
   }
 
-  const setRedNumber = (input) => {
-    conditionallySetNumber(input, setRed)
+  const generateSetRed = (index) => {
+    return (newColor) => {
+      conditionallySetNumber(newColor, setRed, index);
+    }
   }
-  const setGreenNumber = (input) => {
-    conditionallySetNumber(input, setGreen)
+  const generateSetGreen = (index) => {
+    return (newColor) => {
+      conditionallySetNumber(newColor, setGreen, index);
+    }
   }
-  const setBlueNumber = (input) => {
-    conditionallySetNumber(input, setBlue)
+  const generateSetBlue = (index) => {
+    return (newColor) => {
+      conditionallySetNumber(newColor, setBlue, index);
+    }
   }
 
   return (
-    <div className={s.colorPickerContainer}>
+    <div className={s.colorPickerHomeContainer}>
       <h1 className={s.header}>Welcome to Color Picker</h1>
-      <ChosenColorContainer red={red} green={green} blue={blue}/>
-      <div className={s.rgbContainer}>
-        <div className={s.colorContainer}>
-          <div className={s.colorLabelRed}>Red</div>
-          <input
-            className={s.colorInputRed}
-            value={red}
-            onChange={(ev) => setRedNumber(ev.target.value)}
-            placeholder={placeholder}
-          />
-        </div>
-        <div className={s.colorContainer}>
-          <div className={s.colorLabelGreen}>Green</div>
-          <input
-            className={s.colorInputGreen}
-            value={green}
-            onChange={(ev) => setGreenNumber(ev.target.value)}
-            placeholder={placeholder}
-          />
-        </div>
-        <div className={s.colorContainer}>
-          <div className={s.colorLabelBlue}>Blue</div>
-          <input
-            className={s.colorInputBlue}
-            value={blue}
-            onChange={(ev) => setBlueNumber(ev.target.value)}
-            placeholder={placeholder}
-          />
-        </div>
+      <div className={s.colorPickerFormContainer}>
+      {initialColorArray.map((val, index) => {
+        return <ColorPicker 
+        red={red[index]} 
+        green={green[index]} 
+        blue={blue[index]} 
+        setRed={generateSetRed(index)} 
+        setGreen={generateSetGreen(index)} 
+        setBlue={generateSetBlue()}/>
+      })}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ColorPicker;
+export default ColorPickerHome
